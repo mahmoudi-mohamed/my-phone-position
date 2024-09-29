@@ -80,9 +80,11 @@ public class MapActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1000 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             initializeLogic();
+            initializeMap();
         } else {
 
             showPermissionDeniedMessage();
+            finish();
         }
     }
 
