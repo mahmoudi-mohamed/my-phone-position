@@ -24,8 +24,8 @@
 
 		<ImageView
 			android:id="@+id/imageview3"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="183dp"
+			android:layout_height="505dp"
 			android:layout_weight="1"
 			android:scaleType="fitCenter"
 			android:src="@drawable/gps3_1" />

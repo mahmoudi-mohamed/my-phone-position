@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize(Bundle _savedInstanceState) {
         getSupportActionBar().hide();
+        getWindow().setStatusBarColor(Color.parseColor("#008000"));
     }
 
 
@@ -130,3 +131,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

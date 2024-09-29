@@ -95,6 +95,7 @@ public class MapActivity extends AppCompatActivity {
         latlng = findViewById(R.id.latlng);
         textviewspeed = findViewById(R.id.textviewspeed);
         locate = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        getWindow().setStatusBarColor(Color.parseColor("#008000"));
 
 
         initializeMap();
@@ -150,7 +151,7 @@ public class MapActivity extends AppCompatActivity {
                 latlng.setText(String.format(Locale.getDefault(), "%.6f, %.6f", latitud, longitud));
 
                 if (previousLocation != null) {
-                   
+
                     float distanceInMeters = previousLocation.distanceTo(location);
                     long timeDifferenceInSeconds = (location.getTime() - previousLocation.getTime()) / 1000;
 
