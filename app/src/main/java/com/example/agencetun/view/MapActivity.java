@@ -55,7 +55,7 @@ public class MapActivity extends AppCompatActivity {
     private LocationManager locate;
     private LocationListener _locate_location_listener;
     private TimerTask t;
-    private SharedPreferences id_locator;
+    private Location previousLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class MapActivity extends AppCompatActivity {
         latlng = findViewById(R.id.latlng);
         textviewspeed = findViewById(R.id.textviewspeed);
         locate = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        id_locator = getSharedPreferences("id_locator", Activity.MODE_PRIVATE);
+
 
         initializeMap();
         setupFAB();
@@ -131,7 +131,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locate.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, _locate_location_listener);
+                    locate.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, _locate_location_listener);
                 }
             }
         });
@@ -143,19 +143,32 @@ public class MapActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 latitud = location.getLatitude();
                 longitud = location.getLongitude();
-                _mapview1_controller.zoomTo(15);
+
+               // _mapview1_controller.zoomTo(15);
                 _mapview1_controller.moveCamera(latitud, longitud);
                 _mapview1_controller.setMarkerPosition("pin", latitud, longitud);
                 latlng.setText(String.format(Locale.getDefault(), "%.6f, %.6f", latitud, longitud));
 
-                float speedInMetersPerSecond = location.getSpeed(); // Speed in meters/second
-                float speedInKmPerHour = (speedInMetersPerSecond * 3600) / 1000; // Convert to km/h
+                if (previousLocation != null) {
+                   
+                    float distanceInMeters = previousLocation.distanceTo(location);
+                    long timeDifferenceInSeconds = (location.getTime() - previousLocation.getTime()) / 1000;
 
 
-                textviewspeed.setText(String.format(Locale.getDefault(), " %.2f km/h", speedInKmPerHour));
+                    if (timeDifferenceInSeconds > 0) {
+                        float speedInMetersPerMinute = (distanceInMeters / timeDifferenceInSeconds) * 60;
+                        textviewspeed.setText(String.format(Locale.getDefault(), " %.2f m/min", speedInMetersPerMinute));
+                    }
+                } else {
+
+                    textviewspeed.setText(" Not available");
+                }
+
+                previousLocation = location;
 
                 _getLocation(latitud, longitud);
             }
+
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -177,7 +190,7 @@ public class MapActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                            locate.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, _locate_location_listener);
+                            locate.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 1, _locate_location_listener);
                         }
                     }
                 });
@@ -243,3 +256,4 @@ public class MapActivity extends AppCompatActivity {
         }
     }
 }
+
