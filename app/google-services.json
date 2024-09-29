@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "849642947365",
+    "project_id": "agence-tun",
+    "storage_bucket": "agence-tun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849642947365:android:b3301c02be87962bf850cc",
+        "android_client_info": {
+          "package_name": "com.example.agencetun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849642947365-5huthm1a5rv032ritdee4oai027as0cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcfsdPTNvs1gezrI3eyMli10BpvKPQL3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849642947365-5huthm1a5rv032ritdee4oai027as0cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
